@@ -5,23 +5,23 @@ import CardDomainModel from './CardDomainModel'
 
 class Presenter extends BasePresenter {
 
-  commandNames = {
+  commandNames = {};
+  eventNames = {
     'getCards': 'getCards',
     'addNewCard': 'addNewCard',
     'deleteCard': 'deleteCard',
     'updateCard': 'updateCard'
   };
-  eventNames = {};
 
   registerCommandHandlers() {
-    this.registerCommand(this.commandNames.getCards, 'getCards', this.noTransform, this.listDomainToListView)
-    this.registerCommand(this.commandNames.addNewCard, 'addNewCard', this.viewItemToDomainItem, this.domainItemToViewItem)
-    this.registerCommand(this.commandNames.deleteCard, 'deleteCard', this.viewItemToDomainItem, this.domainItemToViewItem)
-    this.registerCommand(this.commandNames.updateCard, 'updateCard', this.viewItemToDomainItem, this.domainItemToViewItem)
+
   }
 
   registerEventHandlers() {
-
+    this.registerEvent(this.eventNames.getCards, 'getCards', this.noTransform, this.listDomainToListView)
+    this.registerEvent(this.eventNames.addNewCard, 'addNewCard', this.viewItemToDomainItem, this.domainItemToViewItem)
+    this.registerEvent(this.eventNames.deleteCard, 'deleteCard', this.viewItemToDomainItem, this.domainItemToViewItem)
+    this.registerEvent(this.eventNames.updateCard, 'updateCard', this.viewItemToDomainItem, this.domainItemToViewItem)
   }
 
   noTransform(x) { return x }

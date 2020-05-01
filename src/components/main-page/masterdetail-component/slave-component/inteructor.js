@@ -15,18 +15,18 @@ class Inteructor extends BaseInteructor {
   }
 
   onMasterRecordSelected(cardDomainModel) {
-    let eventName = this.presenter.eventNames.cardSelected
-    return this.presenter.fireEvent(eventName, cardDomainModel)
+    let commandName = this.presenter.commandNames.cardSelected
+    return this.presenter.executeCommand(commandName, cardDomainModel)
   }
 
   onMasterRecordVer2Selected(cardDomainModel) {
     return persist.items.get(cardDomainModel.id).then(results => {
-      let eventName = this.presenter.eventNames.cardSelectedVer2
+      let commandName = this.presenter.commandNames.cardSelectedVer2
       let args = {
         selectedCard: cardDomainModel,
         items: results.map(x => this.apiToDomainModel(x))
       }
-      return this.presenter.fireEvent(eventName, args)
+      return this.presenter.executeCommand(commandName, args)
     })
   }
 

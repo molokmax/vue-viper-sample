@@ -8,26 +8,26 @@ import CardDomainModel from '../master-component/CardDomainModel'
 class Presenter extends BasePresenter {
 
   commandNames = {
+    'cardSelected': 'cardSelected',
+    'cardSelectedVer2': 'cardSelectedVer2'
+  };
+  eventNames = {
     'getItems': 'getItems',
     'addNewItem': 'addNewItem',
     'deleteItem': 'deleteItem',
     'updateItem': 'updateItem'
   };
-  eventNames = {
-    'cardSelected': 'cardSelected',
-    'cardSelectedVer2': 'cardSelectedVer2'
-  };
 
   registerCommandHandlers() {
-    this.registerCommand(this.commandNames.getItems, 'getItems', this.cardViewToCardDomain, this.listDomainToListView)
-    this.registerCommand(this.commandNames.addNewItem, 'addNewItem', this.viewItemToDomainItem, this.domainItemToViewItem)
-    this.registerCommand(this.commandNames.deleteItem, 'deleteItem', this.viewItemToDomainItem, this.domainItemToViewItem)
-    this.registerCommand(this.commandNames.updateItem, 'updateItem', this.viewItemToDomainItem, this.domainItemToViewItem)
+    this.registerCommand(this.commandNames.cardSelected, 'onCardSelected', this.cardDomainToCardView, this.listViewToListDomain)
+    this.registerCommand(this.commandNames.cardSelectedVer2, 'onCardSelectedVer2', this.customModelToViewModel, this.listViewToListDomain)
   }
 
   registerEventHandlers() {
-    this.registerEvent(this.eventNames.cardSelected, 'onCardSelected', this.cardDomainToCardView, this.listViewToListDomain)
-    this.registerEvent(this.eventNames.cardSelectedVer2, 'onCardSelectedVer2', this.customModelToViewModel, this.listViewToListDomain)
+    this.registerEvent(this.eventNames.getItems, 'getItems', this.cardViewToCardDomain, this.listDomainToListView)
+    this.registerEvent(this.eventNames.addNewItem, 'addNewItem', this.viewItemToDomainItem, this.domainItemToViewItem)
+    this.registerEvent(this.eventNames.deleteItem, 'deleteItem', this.viewItemToDomainItem, this.domainItemToViewItem)
+    this.registerEvent(this.eventNames.updateItem, 'updateItem', this.viewItemToDomainItem, this.domainItemToViewItem)
   }
 
   customModelToViewModel(data) {

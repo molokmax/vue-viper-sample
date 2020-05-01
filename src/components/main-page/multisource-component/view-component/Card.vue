@@ -47,8 +47,8 @@ export default {
     addCardButtonClick() {
       this.loading = true
       // TODO: how to override handler? I think it's overhead we should configure component with config (from inteructor?)
-      let commandName = this.presenter.commandNames.addNewCard;
-      return this.presenter.executeCommand(commandName, this.newRecord).then((cardViewModel) => {
+      let eventName = this.presenter.eventNames.addNewCard;
+      return this.presenter.fireEvent(eventName, this.newRecord).then((cardViewModel) => {
         this.newRecord = new CardViewModel()
         console.log('card created:', cardViewModel)
         return this.refreshData()
@@ -59,8 +59,8 @@ export default {
     },
     deleteCardButtonClick(cardViewModel) {
       this.loading = true
-      let commandName = this.presenter.commandNames.deleteCard;
-      return this.presenter.executeCommand(commandName, cardViewModel).then((deletedCardViewModel) => {
+      let eventName = this.presenter.eventNames.deleteCard;
+      return this.presenter.fireEvent(eventName, cardViewModel).then((deletedCardViewModel) => {
         console.log('card deleted:', deletedCardViewModel)
         return this.refreshData()
       }, (err) => {
@@ -71,8 +71,8 @@ export default {
     
     refreshData() {
       this.loading = true
-      let commandName = this.presenter.commandNames.getCards;
-      return this.presenter.executeCommand(commandName).then((cardViewModels) => {
+      let eventName = this.presenter.eventNames.getCards;
+      return this.presenter.fireEvent(eventName).then((cardViewModels) => {
         this.loading = false
         this.data = cardViewModels
       }, (err) => {

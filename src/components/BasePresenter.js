@@ -18,7 +18,7 @@ class BasePresenter {
       console.warn(`Command '${commandName}' is not exists for Presentor '${this.constructor.name}'`)
     } else {
       // check that inteructor has method handlerName
-      if (!this.hasInteructorHandler(handlerName)) {
+      if (!this.hasViewHandler(handlerName)) {
         console.warn(`Handler '${handlerName}' is not exists for Inteructor '${this.inteructor.constructor.name}'`)
       } else {
         this.commandRegistrations[commandName] = new HandlerRegistration(commandName, handlerName, inboundTransform, outboundTransform)
@@ -36,8 +36,8 @@ class BasePresenter {
       let registration = this.commandRegistrations[commandName]
       if (registration) {
         let inboundArgs = registration.inboundTransform.call(this, args)
-        let handler = this.inteructor[registration.handlerName];
-        return handler.call(this.inteructor, inboundArgs).then(result => {
+        let handler = this.view[registration.handlerName];
+        return handler.call(this.view, inboundArgs).then(result => {
           return registration.outboundTransform.call(this, result)
         })
       } else {
@@ -54,7 +54,7 @@ class BasePresenter {
       console.warn(`Event '${eventName}' is not exists for Presentor '${this.constructor.name}'`)
     } else {
       // check that view has method handlerName
-      if (!this.hasViewHandler(handlerName)) {
+      if (!this.hasInteructorHandler(handlerName)) {
         console.warn(`Handler '${handlerName}' is not exists for View '${this.view.constructor.name}'`)
       } else {
         this.eventRegistrations[eventName] = new HandlerRegistration(eventName, handlerName, inboundTransform, outboundTransform)
@@ -72,8 +72,8 @@ class BasePresenter {
       let registration = this.eventRegistrations[eventName]
       if (registration) {
         let inboundArgs = registration.inboundTransform.call(this, args)
-        let handler = this.view[registration.handlerName];
-        return handler.call(this.view, inboundArgs).then(result => {
+        let handler = this.inteructor[registration.handlerName];
+        return handler.call(this.inteructor, inboundArgs).then(result => {
           return registration.outboundTransform.call(this, result)
         })
       } else {
@@ -105,11 +105,11 @@ class BasePresenter {
 
   setInteructor(inteructor) {
     this.inteructor = inteructor
-    this.registerCommandHandlers()
+    this.registerEventHandlers()
   }
   setView(view) {
     this.view = view
-    this.registerEventHandlers()
+    this.registerCommandHandlers()
   }
 }
 
